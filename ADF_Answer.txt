@@ -1,0 +1,118 @@
+1. Linked service
+Ans: Linked service it is a connection between azure and other service
+connection type
+1.Azure sql database
+2.blob storage
+3.Data lake
+4.sql server
+
+
+2. What is Integration Runtime and its types?
+Ans: Integration Runtime is give a compute power to the adf and it will do work using virtual machine
+    its type
+   1.azure integration runtime - it is  cloud data source
+   2.self hosted IR - it will used to connect local server
+   3.SSIS IR - it will run package in azure
+
+3. When will we use Tumbling Window Trigger?
+Ans: when we want to run pipeline for every 1 hour 
+     we will give fixed time to the trigger
+     it will run pipeline that time only
+
+
+4. What are the types of triggers?
+Ans: 1.Schedule trigger - it will run specific time
+     2.Tumbling window trigger - it will run fixed time
+     3. Event trigger - it will run when a action immediately happed it will run immediately
+
+5. I have an on-prem file. How do I copy it? Mention Self-hosted IR.
+ Ans: i have a file in my local server and i upload the file to azure portal after that i go to the adf and create 2 linked service 1 for source another 1 for destination to blob storage there is a multiple file in that source blob storage we want to take particular file that's why we choose Dataset i will create 2 dataset 1 for source another 1 for destination and create pipeline to take copy activity and choose source dataset and sink dataset for blob storage and mapping and run the pipeline
+  
+
+6. Name the activities that you have used in ADF.
+Ans: 1.lookup activity
+     2.foreach activity 
+     3.if activity
+     4.copy activity
+     5.set activity
+     6.script activity
+     7.stored procedure activity
+     8.executive pipeline activity
+     9.delete activity
+     10.filter activity
+     11.get meta activity
+
+7. Explain each activity and its use. Take any 5 and explain. Please don't take Copy Activity.
+Ans:  lookup activity - it is used to get the information about table 
+      Get meta activity - it is used to get the information about files and folder
+      foreach activity - it is used to loop multiple items
+      script activity - it will use to create sql script
+      stored procedure activity - it will store the sql Query
+
+8. Lookup vs Get Metadata Activity.
+   lookup activity - it is used to get the information about table 
+    Get meta activity - it is used to get the information about files and folder
+
+9. Explain the difference between variables and parameters.
+   parameter  is used to pass the value in pipeline it is not changeable
+   variable is used to store value in pipeline
+
+10. Explain how you will copy 100 tables.
+    we will use meta data pipeline to create 100 copy activity 
+    we will create source tables and values after that create configuration table for pass the value dynamically
+    we will create destination table we will create table names only because we will pass the source value into destination table
+    Go to adf create 2 linked service and create 2 datasets create pipeline take needed activities like lookup for get the information about table names
+    next take foreach activity for loop the multiple items inside the loop we create copy activity choose source dataset and sink datasets mapping and run the pipeline
+
+
+11. Explain metadata-driven pipeline.
+    metadata-driven pipeline it is mainly use for pass dynamic value without using parameters it will automatically run using config table and lookup activity foreach activity and do multiple activity into this one pipeline
+   
+12. How will you run only the failed tables in Copy Activity? — Logging.
+    we will use 2 stored procedure one for success another one failed it will store all information from table it will show error details when the copy activity is failed we will identify the error and solve it through the logging info
+    
+13. How will you monitor your run and how can you automate it?
+    we will check the pipeline activity that run in adf we will the monitor section and get the information like pipeline success or fail 
+    check the status and  error message in the monitor section i can use trigger option to schedule the trigger set time daily 10am that
+    specific time trigger will run automatically
+    
+    
+14. What is Data Flow? What are its types?
+    Data flow is mainly use for transformation it will simplify the complex query 
+    there are 2 types in data flow
+    1. Mapping Data flow -- transform from source
+      joins, filter, derived column(create new column) to destination
+    2. wrangling Data Flow -- power query to transform the Data
+
+15. Explain the basic activities in Data Flow.
+    Join -- it will join two table to one table based on condition like uniquid from both table
+    derived column -- it will create new column
+    filter -- it will filter particular column based on condition
+
+
+16. What is full load and incremental load?
+     Full load less data :
+     That called dimension table like numeric data --- revenue
+     It will delete old data and update new data
+
+     Incremental load large data:
+     That called fact table like descriptive information -- customer name 
+    It will update new records only based on 2 rules like primary key and updated date
+
+17. How will you identify whether a table is suitable for full load or incremental load? — Check
+fact/dimension.
+  i will identify the table if the table is small datasets that means dimension table it will suitable for full load 
+  whether the table is large datasets that means fact table it will suitable for incremental load
+
+18. What are the rules for incremental load?
+    There are 2 rules like primary key and updated date
+     we will check unique value and updated date to identify new records
+
+19. How will you achieve incremental load? — Watermark column/value
+
+    I will achieve the incremental load based on
+   If the watermark column name is  order date and the watermark value is last date like 6-09-2026
+   we will create a condition if the order date is  > 6-09-2026 it will take the updated records we will use max date to get last date
+
+
+
