@@ -1,26 +1,9 @@
 metadata driven pipeline
 
-After create dataset in tables click dynanic
-@dataset().SourceSchema
-@dataset().SourceTable
-@dataset().TargetSchema
-@dataset().TargetTable
+create 2 linked service for connect azure sql database for source and sink
+create dataset source and 
+sink dataset and 
 
-lookup query
-first  row  only  uncheck  after
-
-select * from ConfigTable where IsActive = 1
-
-connect lookup to foreach
-
-for each change lookup name only
-@activity('').output.value
-
-
-if condition expression
-@equals(item().LoadType,'FULL')
-
-if  true  copy activity inside 
 first go to parameter SourceSchema,SourceTable
 sink datasets TargetSchema,TargetTable
 next give sourcedataset refresh
@@ -30,17 +13,65 @@ next give sourcedataset refresh
 @item().SourceTable
 @item().TargetSchema
 @item().TargetTable
- 
+
+lookup dataset  for all dataset azure sql database
+for lookup dataset enter manually schema name dbo table name ConfigTable
+
+
+table la parameter ra pass pannanum
+After create dataset in tables click dynamic
+click new go to parameter
+for source click dynamic and pass
+click enter manually
+
+@dataset().SourceSchema
+@dataset().SourceTable
+for sink click dynamic and pass
+@dataset().TargetSchema
+@dataset().TargetTable
+
+create lookup activity
+lookup query
+first  row  only  uncheck  after
+
+select * from ConfigTable where IsActive = 1   #isactive 1 na active table mattum varom
+
+connect lookup to foreach
+
+for each change lookup name only
+@activity('').output.value
+
+
+if condition expression click dynamic
+@equals(item().LoadType,'FULL') 
+
+ lookup output la irukura value kulla irukurathu tha item() athukulla irukura column name tha LoadType = 'Full' iruntha ture illana false  # intha function LoadType fulla iruka illayanu check pannum 
+
+if  true  copy activity inside 
 
 
 full load copy activity
-sink  side  pre-copy script
+for Source
+@item().SourceSchema
+@item().SourceTable
+for sink
+@item().TargetSchema
+@item().TargetTable
+
+sink  side la pre-copy script click dynamic
+
+Existing irukura data remove aakitutha new data add aakanum athukutha pre-copy script use aakuthu
 
 @concat('TRUNCATE TABLE ', item().TargetSchema, '.', item().TargetTable)
-or 
-@concat('TRUNCATE TABLE ', item().TargetSchema, '.[', item().TargetTable, ']')
+
 
 increment copy activity query
+
+
+SourceScheme la dynamic value kodukakudathu manual la SourceSchema la dbo table la table ithu ethukuna error varakudathu athanala
+
+sql script build panna we use only concat
+
 source  query  click dynamic
 
 @concat(
@@ -55,17 +86,22 @@ item().WatermarkValue,
 ''''
 )
 
+sink la Data properties la dynamic click
+
+@item().TargetSchema
+@item().TargetTable
 
 copy activity sink click  upsert  for  update 
  next key column
 @createArray(item().DeltaKeyColumn)
 
-
+Delta key column tha ordered atha base pannitha update nadakuthu
 
 
 
 Script code (you shold build a script compulsory give @concate
 
+use script activity for update latest date after copy activity run success
 click  source_datasets   linked   service
 
 @concat(
