@@ -1,0 +1,50 @@
+CREATE TABLE ConfigTable
+(
+    ConfigID INT IDENTITY(1,1) PRIMARY KEY,
+
+    SourceSchema VARCHAR(50) DEFAULT 'dbo',
+
+    SourceTable VARCHAR(100),
+
+    TargetSchema VARCHAR(50) DEFAULT 'dbo',
+
+    TargetTable VARCHAR(100),
+
+    LoadType VARCHAR(20),   -- FULL / INCREMENTAL
+
+    IsActive BIT,
+
+    WatermarkColumn VARCHAR(100),   -- Example: OrderDate etha vechi data last update aachinu find panna(date column name)
+
+    WatermarkValue DATETIME NULL,   -- Last processed value where orderdate > last date iruntha atha mattum filter panni edukum ("10-07-2026")
+
+    DeltaKeyColumn VARCHAR(100)    --- order_id tha primary key unique value vechi find pannalam
+);
+
+INSERT INTO ConfigTable
+(
+    SourceSchema,
+    SourceTable,
+    TargetSchema,
+    TargetTable,
+    LoadType,
+    IsActive,
+    WatermarkColumn,
+    WatermarkValue,
+    DeltaKeyColumn
+)
+VALUES
+('dbo', 'Customers', 'dbo', 'CustomersTarget',
+ 'FULL', 1, NULL, NULL, NULL),
+
+('dbo', 'Products', 'dbo', 'ProductsTarget',
+ 'FULL', 1, NULL, NULL, NULL),
+
+('dbo', 'Employees', 'dbo', 'EmployeesTarget',
+ 'FULL', 1, NULL, NULL, NULL),
+
+('dbo', 'Orders', 'dbo', 'OrdersTarget',
+ 'INCREMENTAL', 1, 'OrderDate', '2026-07-10', 'OrderID'),
+
+('dbo', 'Sales', 'dbo', 'SalesTarget',
+ 'INCREMENTAL', 1, 'SaleDate', '2026-07-10', 'SaleID');

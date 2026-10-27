@@ -1,0 +1,82 @@
+CREATE TABLE Customers
+(
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    City VARCHAR(50),
+    Email VARCHAR(100),
+    CreatedDate DATETIME
+);
+
+INSERT INTO Customers VALUES
+(1, 'Arun', 'Chennai', 'arun@gmail.com', '2026-01-10'),
+(2, 'Kumar', 'Bangalore', 'kumar@gmail.com', '2026-01-15'),
+(3, 'Priya', 'Coimbatore', 'priya@gmail.com', '2026-02-01'),
+(4, 'Ravi', 'Madurai', 'ravi@gmail.com', '2026-02-10'),
+(5, 'Divya', 'Chennai', 'divya@gmail.com', '2026-03-05');
+
+CREATE TABLE Products
+(
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100),
+    Category VARCHAR(50),
+    Price DECIMAL(10,2),
+    CreatedDate DATETIME
+);
+
+INSERT INTO Products VALUES
+(101, 'Laptop', 'Electronics', 55000, '2026-01-05'),
+(102, 'Mobile', 'Electronics', 25000, '2026-01-10'),
+(103, 'Keyboard', 'Accessories', 1500, '2026-02-05'),
+(104, 'Mouse', 'Accessories', 800, '2026-02-15'),
+(105, 'Monitor', 'Electronics', 12000, '2026-03-01');
+
+CREATE TABLE Employees
+(
+    EmployeeID INT PRIMARY KEY,
+    EmployeeName VARCHAR(100),
+    DepartmentID INT,
+    Salary DECIMAL(10,2),
+    City VARCHAR(50),
+    JoiningDate DATETIME
+);
+
+INSERT INTO Employees VALUES
+(1, 'Arun', 10, 45000, 'Chennai', '2025-01-10'),
+(2, 'Kumar', 20, 55000, 'Bangalore', '2025-02-15'),
+(3, 'Priya', 10, 60000, 'Chennai', '2025-03-20'),
+(4, 'Ravi', 30, 50000, 'Madurai', '2025-04-10'),
+(5, 'Divya', 20, 65000, 'Coimbatore', '2025-05-05');
+
+CREATE TABLE Orders
+(
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    ProductID INT,
+    OrderQty INT,
+    OrderDate DATETIME,
+    TotalAmount DECIMAL(10,2)
+);
+
+INSERT INTO Orders VALUES
+(1001, 1, 101, 1, '2026-01-10', 55000),
+(1002, 2, 102, 2, '2026-01-15', 50000),
+(1003, 3, 103, 3, '2026-02-05', 4500),
+(1004, 4, 104, 2, '2026-02-20', 1600),
+(1005, 5, 105, 1, '2026-03-10', 12000);
+
+CREATE TABLE Sales
+(
+    SaleID INT PRIMARY KEY,
+    ProductID INT,
+    CustomerID INT,
+    Quantity INT,
+    SaleAmount DECIMAL(10,2),
+    SaleDate DATETIME
+);
+
+INSERT INTO Sales VALUES
+(2001, 101, 1, 1, 55000, '2026-01-12'),
+(2002, 102, 2, 2, 50000, '2026-01-18'),
+(2003, 103, 3, 5, 7500, '2026-02-10'),
+(2004, 104, 4, 3, 2400, '2026-02-25'),
+(2005, 105, 5, 2, 24000, '2026-03-15');

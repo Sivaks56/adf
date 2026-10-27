@@ -1,0 +1,47 @@
+CREATE TABLE CustomersTarget
+(
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(100),
+    City VARCHAR(50),
+    Email VARCHAR(100),
+    CreatedDate DATETIME
+);
+
+CREATE TABLE ProductsTarget
+(
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100),
+    Category VARCHAR(50),
+    Price DECIMAL(10,2),
+    CreatedDate DATETIME
+);
+
+CREATE TABLE EmployeesTarget
+(
+    EmployeeID INT PRIMARY KEY,
+    EmployeeName VARCHAR(100),
+    DepartmentID INT,
+    Salary DECIMAL(10,2),
+    City VARCHAR(50),
+    JoiningDate DATETIME
+);
+
+CREATE TABLE OrdersTarget
+(
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    ProductID INT,
+    OrderQty INT,
+    OrderDate DATETIME,
+    TotalAmount DECIMAL(10,2)
+);
+
+CREATE TABLE SalesTarget
+(
+    SaleID INT PRIMARY KEY,
+    ProductID INT,
+    CustomerID INT,
+    Quantity INT,
+    SaleAmount DECIMAL(10,2),
+    SaleDate DATETIME
+);
