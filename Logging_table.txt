@@ -1,0 +1,105 @@
+Scripts for Logging :
+LOG Table Creation :
+
+CREATE TABLE dbo.Pipeline_Log
+(
+    LogID INT IDENTITY(1,1) PRIMARY KEY,
+    PipelineName VARCHAR(200),
+    PipelineRunID VARCHAR(100),
+    SourceTable VARCHAR(200),
+    TargetTable VARCHAR(200),
+    LoadType VARCHAR(20),
+    Status VARCHAR(20),
+    RowsCopied INT,
+    StartTime DATETIME,
+    EndTime DATETIME,
+    ErrorMessage VARCHAR(MAX)
+);
+
+Success Log SP : 
+CREATE PROCEDURE dbo.usp_InsertPipelineLogSuccess
+(
+    @PipelineName VARCHAR(200),
+    @PipelineRunID VARCHAR(100),
+    @SourceTable VARCHAR(200),
+    @TargetTable VARCHAR(200),
+    @LoadType VARCHAR(20),
+    @RowsCopied INT,
+    @StartTime DATETIME,
+    @EndTime DATETIME
+)
+AS
+BEGIN
+
+    INSERT INTO dbo.Pipeline_Log
+    (
+        PipelineName,
+        PipelineRunID,
+        SourceTable,
+        TargetTable,
+        LoadType,
+        Status,
+        RowsCopied,
+        StartTime,
+        EndTime,
+        ErrorMessage
+    )
+    VALUES
+    (
+        @PipelineName,
+        @PipelineRunID,
+        @SourceTable,
+        @TargetTable,
+        @LoadType,
+        'SUCCESS',
+        @RowsCopied,
+        @StartTime,
+        @EndTime,
+        NULL
+    );
+
+END;
+
+Failure Log SP :
+CREATE PROCEDURE dbo.usp_InsertPipelineLogError
+(
+    @PipelineName VARCHAR(200),
+    @PipelineRunID VARCHAR(100),
+    @SourceTable VARCHAR(200),
+    @TargetTable VARCHAR(200),
+    @LoadType VARCHAR(20),
+    @StartTime DATETIME,
+    @EndTime DATETIME,
+    @ErrorMessage VARCHAR(MAX)
+)
+AS
+BEGIN
+
+    INSERT INTO dbo.Pipeline_Log
+    (
+        PipelineName,
+        PipelineRunID,
+        SourceTable,
+        TargetTable,
+        LoadType,
+        Status,
+        RowsCopied,
+        StartTime,
+        EndTime,
+        ErrorMessage
+    )
+    VALUES
+    (
+        @PipelineName,
+        @PipelineRunID,
+        @SourceTable,
+        @TargetTable,
+        @LoadType,
+        'FAILED',
+        0,
+        @StartTime,
+        @EndTime,
+        @ErrorMessage
+    );
+
+END;
